@@ -17,7 +17,7 @@ The TDC7200 exposes its configuration, status, and measurement-result registers 
 
 ## Interface
 
-| Port | Direction | Description |
+|Port  |Direction  |Description  |
 |---|---|---|
 | `clk`, `rst_n` | in | System clock, active-low async reset |
 | `start` | in | One-cycle pulse to begin a transaction |
