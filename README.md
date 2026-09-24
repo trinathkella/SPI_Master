@@ -4,7 +4,7 @@ A synthesizable SystemVerilog SPI master designed to interface an FPGA (AMD Xili
 
 ## Overview
 
-The TDC7200 exposes its configuration, status, and measurement-result registers over a 4-wire SPI-like interface (`CSB`, `SCLK`, `DIN`, `DOUT`). This module acts purely as a protocol engine — it takes a simple parallel command (address, read/write, width, write-data) from upstream FPGA logic and produces the correctly-timed serial transaction on the physical interface, with **no knowledge of what any given register means**. That semantic layer (which register to read, when, and what to do with the result) is intentionally kept outside this module, the same way a generic SPI controller's hardware knows nothing about the device it's talking to — that intelligence lives in whatever drives it.
+The TDC7200 exposes its configuration, status, and measurement-result registers over a 4-wire SPI-like interface (`CSB`, `SCLK`, `DIN`, `DOUT`). This module acts purely as a protocol engine — it takes a parallel command (address, read/write, width, write-data) from upstream FPGA logic and produces the correctly-timed serial transaction on the physical interface.
 
 ## Protocol summary (from the TDC7200 datasheet)
 
