@@ -11,8 +11,8 @@ module spi_master #(parameter A_WIDTH = 6,
 					parameter D_WIDTH = 32, 
 					parameter CLK_DIV = 2, 
 					parameter CPOL = 0,
-					parameter SETUP_CYCLES = 3,
-					parameter HOLD_CYCLES  = 3)
+					parameter SETUP_CYCLES = 1,
+					parameter HOLD_CYCLES  = 1)
 (
 	// Control Signals
 	input	wire	clk,					// 80 MHz

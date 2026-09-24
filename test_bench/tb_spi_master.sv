@@ -6,10 +6,10 @@ module tb_spi_master;
 	parameter RD_D_WIDTH = 24; 
 	parameter WR_D_WIDTH = 8;
 	parameter D_WIDTH = 32;
-	parameter CLK_DIV = 8;
+	parameter CLK_DIV = 2;
 	parameter CPOL = 0;
-	parameter SETUP_CYCLES = 3;
-	parameter HOLD_CYCLES  = 3;
+	parameter SETUP_CYCLES = 1;
+	parameter HOLD_CYCLES  = 1;
 
 	reg clk, rst_n;
 	reg start, rw, auto_inc, width_flag;
@@ -24,6 +24,7 @@ module tb_spi_master;
 
 	// Expected Result
 	reg [(2 * WR_D_WIDTH) - 1 : 0] expected_val;
+	reg din_exp;
 
 	reg [A_WIDTH - 2 : 0] cntr;
 
@@ -70,16 +71,18 @@ module tb_spi_master;
 
 	// Test Bench
 	initial begin
+	    width_flag = 1'b0;
+	    // Driving the addr, rw, auto_inc, wr_data (before start asserts because we can remove the ambiguity of the start reading the older values of these)
+		addr = 6'b000000; rw = 1'b1; auto_inc = 1'b0; wr_data = 8'hA5;
+		
+		expected_val = {auto_inc, rw, addr, wr_data};
+		start = 0;
+		din_exp = expected_val[15];
+		dout = 1'b0;
 		rst_n = 1'b0;
 		cntr  = 1'b0;
 		repeat(2) @(posedge clk);
 		rst_n = 1'b1;
-
-		// Driving the addr, rw, auto_inc, wr_data (before start asserts because we can remove the ambiguity of the start reading the older values of these)
-		addr = 6'b000000; rw = 1'b1; auto_inc = 1'b0; wr_data = 8'hA5;
-
-		expected_val = {auto_inc, rw, addr, wr_data};
-		dout = 1'b0;
 		
 		// Start Signal Stimulus
 		start = 1'b0;
