@@ -9,7 +9,7 @@ module tb_spi_master;
 	parameter CLK_DIV = 2;
 	parameter CPOL = 0;
 	parameter SETUP_CYCLES = 1;
-	parameter HOLD_CYCLES  = 1;
+	parameter HOLD_CYCLES  = 3;
 
 	reg clk, rst_n;
 	reg start, rw, auto_inc, width_flag;
@@ -64,26 +64,27 @@ module tb_spi_master;
 			else
 				$display("[%0t] FAIL: bit %0d - expected=%b actual(din)=%b",
 				          $time, cntr, expected_val[((2*WR_D_WIDTH)-1)-cntr], din);
-
 			cntr <= cntr + 1;
 		end
+	end
+	
+	always @ (negedge sclk) begin
+       din_exp <= expected_val[15-cntr];	
 	end
 
 	// Test Bench
 	initial begin
 	    width_flag = 1'b0;
 	    // Driving the addr, rw, auto_inc, wr_data (before start asserts because we can remove the ambiguity of the start reading the older values of these)
-		addr = 6'b000000; rw = 1'b1; auto_inc = 1'b0; wr_data = 8'hA5;
-		
+		addr = 6'b000000; rw = 1'b1; auto_inc = 1'b1; wr_data = 8'hF5;
 		expected_val = {auto_inc, rw, addr, wr_data};
 		start = 0;
-		din_exp = expected_val[15];
+		din_exp = 0;
 		dout = 1'b0;
 		rst_n = 1'b0;
 		cntr  = 1'b0;
 		repeat(2) @(posedge clk);
 		rst_n = 1'b1;
-		
 		// Start Signal Stimulus
 		start = 1'b0;
 		repeat(5) @(posedge clk);

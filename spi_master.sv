@@ -12,7 +12,7 @@ module spi_master #(parameter A_WIDTH = 6,
 					parameter CLK_DIV = 2, 
 					parameter CPOL = 0,
 					parameter SETUP_CYCLES = 1,
-					parameter HOLD_CYCLES  = 1)
+					parameter HOLD_CYCLES  = 3)
 (
 	// Control Signals
 	input	wire	clk,					// 80 MHz
@@ -39,6 +39,7 @@ module spi_master #(parameter A_WIDTH = 6,
 	reg  [D_WIDTH - 1 : 0] shift_reg;
 	reg  [A_WIDTH - 1 : 0] edge_count, wait_count;	// Edge_Count for counting the sclk edges, wait_count - counter reg for WAIT_START || WAIT_END
 	reg [$clog2(CLK_DIV) - 1 : 0] clk_div_count;	// For dividing the sys_clk to the sclk
+	reg last_bit;									// To remember the last edge and once the last fallinf edge of the sclk happens, then the sclk sits in the CPOL state
 	// WIres
 	wire sclk_tick;									// for definig the sampling/driving with the help of sclk currently value
 	wire [A_WIDTH - 1 : 0] target_wait;				// To assign the SETUP or HOLD wait cycles
@@ -96,6 +97,7 @@ module spi_master #(parameter A_WIDTH = 6,
 			if(!rst_n) begin
 				edge_count	<=	'd0;
 				shift_reg 	<=	'd0;
+				last_bit	<=	1'b0;
 				din 		<=	1'b0;
 			end
 			else if(state_ps == IDLE && start) begin
@@ -103,12 +105,17 @@ module spi_master #(parameter A_WIDTH = 6,
 				din 		<=	auto_inc;
 			end
 			else if (state_ps == SHIFT) begin
-				if(sclk_tick && sclk) 						// FALLING EDGE - Driving the DIN a bit to the SLAVE TDC7200
+				if(sclk_tick && sclk) begin                 // FALLING EDGE - Driving the DIN a bit to the SLAVE TDC7200
 					din 	  <= shift_reg[D_WIDTH - 1];
+					if(last_bit)
+						last_bit <= 1'b0;
+				end
 				else if(sclk_tick && !sclk) begin 			// RISING EDGE - Sampling the bit from SLAVE TDC7200 through DOUT
 					shift_reg  <= {shift_reg[D_WIDTH - 2 : 0], dout};
-					if(edge_count == target_edge - 1)
+					if(edge_count == target_edge - 1) begin
 						edge_count <= 'd0;
+						last_bit   <= 1'b1;
+					end
 					else
 						edge_count <= edge_count + 1;
 				end
@@ -137,7 +144,7 @@ module spi_master #(parameter A_WIDTH = 6,
 			end
 			SHIFT : begin
 				csb      = 1'b0;
-				state_ns = (edge_count == target_edge - 1) ? WAIT_END : SHIFT;
+				state_ns = (last_bit && sclk_tick && sclk) ? WAIT_END : SHIFT;
 			end
 			WAIT_END : begin
 				csb = 1'b0;
