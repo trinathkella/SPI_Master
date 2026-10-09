@@ -27,7 +27,9 @@ module tb_spi_master;
 	reg din_exp;
 
 	reg [A_WIDTH - 2 : 0] cntr;
-
+	reg [A_WIDTH - 2 : 0] rd_cntr;
+	reg [D_WIDTH << 1 - 1 : 0] resp;
+	
 	spi_master #(.A_WIDTH(A_WIDTH), .RD_D_WIDTH(RD_D_WIDTH),
 				 .WR_D_WIDTH(WR_D_WIDTH), .D_WIDTH(D_WIDTH),
 				 .CLK_DIV(CLK_DIV), .CPOL(CPOL), .SETUP_CYCLES(SETUP_CYCLES),
@@ -56,6 +58,7 @@ module tb_spi_master;
 	always #6.25 clk = !clk;
 	initial clk = 0;
 
+    // Write Test - DIN
 	always @ (posedge sclk) begin
 		if (!csb) begin
 			if (expected_val[((2 * WR_D_WIDTH) - 1) - cntr] == din)
@@ -68,6 +71,16 @@ module tb_spi_master;
 		end
 	end
 	
+	// Read Test - DOUT
+	always @ (negedge sclk) begin
+	   dout <= resp[15 - rd_cntr];
+	end
+
+	always @ (posedge sclk) 
+	begin
+	   rd_cntr <= rd_cntr + 1;
+	end
+	
 	always @ (negedge sclk) begin
        din_exp <= expected_val[15-cntr];	
 	end
@@ -78,11 +91,13 @@ module tb_spi_master;
 	    // Driving the addr, rw, auto_inc, wr_data (before start asserts because we can remove the ambiguity of the start reading the older values of these)
 		addr = 6'b000000; rw = 1'b1; auto_inc = 1'b1; wr_data = 8'hF5;
 		expected_val = {auto_inc, rw, addr, wr_data};
+		resp = {8'h00, 8'hB3};
 		start = 0;
 		din_exp = 0;
 		dout = 1'b0;
 		rst_n = 1'b0;
 		cntr  = 1'b0;
+		rd_cntr  = 1'b0;
 		repeat(2) @(posedge clk);
 		rst_n = 1'b1;
 		// Start Signal Stimulus
@@ -94,7 +109,10 @@ module tb_spi_master;
 
 		wait(done);
 		repeat(5) @(posedge clk);
-
+		addr = 6'b000010; rw = 1'b0; auto_inc = 1'b0;
+		width_flag = 1'b0;       
+        repeat(1) @(posedge clk);
+        start = 1'b1;
 		$finish;
 	end
 
