@@ -28,7 +28,7 @@ module tb_spi_master;
 
 	reg [A_WIDTH - 2 : 0] cntr;
 	reg [A_WIDTH - 2 : 0] rd_cntr;
-	reg [D_WIDTH << 1 - 1 : 0] resp;
+	reg [WR_D_WIDTH << 1 - 1 : 0] resp;
 	
 	spi_master #(.A_WIDTH(A_WIDTH), .RD_D_WIDTH(RD_D_WIDTH),
 				 .WR_D_WIDTH(WR_D_WIDTH), .D_WIDTH(D_WIDTH),
