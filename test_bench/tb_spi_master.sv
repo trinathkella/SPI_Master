@@ -1,4 +1,6 @@
-`include "E:/Trinath_Kella/modules/spi_master/spi_master.sv"
+`timescale 1ps/1ps
+
+// `include "E:/Trinath_Kella/modules/spi_master/spi_master.sv"
 
 module tb_spi_master;
 
@@ -57,6 +59,11 @@ module tb_spi_master;
 	// Clock - 80 MHz
 	always #6.25 clk = !clk;
 	initial clk = 0;
+
+	initial begin
+		$dumpfile("tb_result.vcd");
+		$dumpvars(0, tb_spi_master);
+	end
 
     // Write Test - DIN
 	always @ (posedge sclk) begin

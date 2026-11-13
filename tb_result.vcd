@@ -1,0 +1,802 @@
+$date
+	Fri Nov 13 10:28:17 2026
+$end
+$version
+	Icarus Verilog
+$end
+$timescale
+	1ps
+$end
+$scope module tb_spi_master $end
+$var wire 1 ! sclk $end
+$var wire 24 " rd_data [23:0] $end
+$var wire 1 # done $end
+$var wire 1 $ din $end
+$var wire 1 % csb $end
+$var wire 1 & busy $end
+$var parameter 32 ' A_WIDTH $end
+$var parameter 32 ( CLK_DIV $end
+$var parameter 32 ) CPOL $end
+$var parameter 32 * D_WIDTH $end
+$var parameter 32 + HOLD_CYCLES $end
+$var parameter 32 , RD_D_WIDTH $end
+$var parameter 32 - SETUP_CYCLES $end
+$var parameter 32 . WR_D_WIDTH $end
+$var reg 6 / addr [5:0] $end
+$var reg 1 0 auto_inc $end
+$var reg 1 1 clk $end
+$var reg 5 2 cntr [4:0] $end
+$var reg 1 3 din_exp $end
+$var reg 1 4 dout $end
+$var reg 16 5 expected_val [15:0] $end
+$var reg 5 6 rd_cntr [4:0] $end
+$var reg 9 7 resp [8:0] $end
+$var reg 1 8 rst_n $end
+$var reg 1 9 rw $end
+$var reg 1 : start $end
+$var reg 1 ; width_flag $end
+$var reg 8 < wr_data [7:0] $end
+$scope module dut $end
+$var wire 6 = addr [5:0] $end
+$var wire 1 0 auto_inc $end
+$var wire 1 1 clk $end
+$var wire 1 4 dout $end
+$var wire 1 8 rst_n $end
+$var wire 1 9 rw $end
+$var wire 1 > sclk_tick $end
+$var wire 1 : start $end
+$var wire 1 ; width_flag $end
+$var wire 8 ? wr_data [7:0] $end
+$var wire 6 @ target_wait [5:0] $end
+$var wire 6 A target_edge [5:0] $end
+$var wire 1 & busy $end
+$var parameter 32 B A_WIDTH $end
+$var parameter 32 C CLK_DIV $end
+$var parameter 32 D CPOL $end
+$var parameter 32 E D_WIDTH $end
+$var parameter 32 F HOLD_CYCLES $end
+$var parameter 32 G RD_D_WIDTH $end
+$var parameter 32 H SETUP_CYCLES $end
+$var parameter 32 I WR_D_WIDTH $end
+$var reg 1 J clk_div_count $end
+$var reg 1 % csb $end
+$var reg 1 $ din $end
+$var reg 1 # done $end
+$var reg 6 K edge_count [5:0] $end
+$var reg 1 L last_bit $end
+$var reg 24 M rd_data [23:0] $end
+$var reg 1 ! sclk $end
+$var reg 32 N shift_reg [31:0] $end
+$var reg 2 O state_ns [1:0] $end
+$var reg 2 P state_ps [1:0] $end
+$var reg 6 Q wait_count [5:0] $end
+$upscope $end
+$upscope $end
+$enddefinitions $end
+$comment Show the parameter values. $end
+$dumpall
+b1000 I
+b1 H
+b11000 G
+b11 F
+b100000 E
+b0 D
+b10 C
+b110 B
+b1000 .
+b1 -
+b11000 ,
+b11 +
+b100000 *
+b0 )
+b10 (
+b110 '
+$end
+#0
+$dumpvars
+b0 Q
+b0 P
+b0 O
+b0 N
+b0 M
+0L
+b0 K
+0J
+b10000 A
+b11 @
+b11110101 ?
+0>
+b0 =
+b11110101 <
+0;
+0:
+19
+08
+b10110011 7
+b0 6
+b1100000011110101 5
+x4
+13
+b0 2
+01
+10
+b0 /
+0&
+1%
+0$
+0#
+b0 "
+0!
+$end
+#6
+11
+#12
+01
+#18
+18
+11
+#24
+01
+#30
+11
+#36
+01
+#42
+11
+#48
+01
+#54
+11
+#60
+01
+#66
+11
+#72
+01
+#78
+1$
+b11000000111101010000000000000000 N
+b1 O
+1:
+11
+#84
+01
+#90
+b1 @
+0%
+1&
+b1 P
+b10 O
+0:
+11
+#96
+01
+#102
+b11 @
+0%
+b10 P
+11
+#108
+01
+#114
+0%
+1>
+1J
+11
+#120
+01
+#126
+b1 2
+b1 6
+0%
+0>
+b1 K
+b1000000111101010000000000000000x N
+1!
+0J
+11
+#132
+01
+#138
+0%
+1>
+1J
+11
+#144
+01
+#150
+0%
+0>
+0!
+0J
+11
+#156
+01
+#162
+0%
+1>
+1J
+11
+#168
+01
+#174
+b10 6
+b10 2
+0%
+0>
+b10 K
+b111101010000000000000000xx N
+1!
+0J
+11
+#180
+01
+#186
+0%
+1>
+1J
+11
+#192
+01
+#198
+03
+0%
+0>
+0$
+0!
+0J
+11
+#204
+01
+#210
+0%
+1>
+1J
+11
+#216
+01
+#222
+b11 2
+b11 6
+0%
+0>
+b11 K
+b111101010000000000000000xxx N
+1!
+0J
+11
+#228
+01
+#234
+0%
+1>
+1J
+11
+#240
+01
+#246
+0%
+0>
+0!
+0J
+11
+#252
+01
+#258
+0%
+1>
+1J
+11
+#264
+01
+#270
+b100 6
+b100 2
+0%
+0>
+b100 K
+b111101010000000000000000xxxx N
+1!
+0J
+11
+#276
+01
+#282
+0%
+1>
+1J
+11
+#288
+01
+#294
+0%
+0>
+0!
+0J
+11
+#300
+01
+#306
+0%
+1>
+1J
+11
+#312
+01
+#318
+b101 2
+b101 6
+0%
+0>
+b101 K
+b111101010000000000000000xxxxx N
+1!
+0J
+11
+#324
+01
+#330
+0%
+1>
+1J
+11
+#336
+01
+#342
+0%
+0>
+0!
+0J
+11
+#348
+01
+#354
+0%
+1>
+1J
+11
+#360
+01
+#366
+b110 6
+b110 2
+0%
+0>
+b110 K
+b111101010000000000000000xxxxxx N
+1!
+0J
+11
+#372
+01
+#378
+0%
+1>
+1J
+11
+#384
+01
+#390
+0%
+0>
+0!
+0J
+11
+#396
+01
+#402
+0%
+1>
+1J
+11
+#408
+01
+#414
+b111 2
+b111 6
+0%
+0>
+b111 K
+b111101010000000000000000xxxxxxx N
+1!
+0J
+11
+#420
+01
+#426
+0%
+1>
+1J
+11
+#432
+01
+#438
+04
+0%
+0>
+0!
+0J
+11
+#444
+01
+#450
+0%
+1>
+1J
+11
+#456
+01
+#462
+b1000 6
+b1000 2
+0%
+0>
+b1000 K
+b111101010000000000000000xxxxxxx0 N
+1!
+0J
+11
+#468
+01
+#474
+0%
+1>
+1J
+11
+#480
+01
+#486
+14
+13
+0%
+0>
+1$
+0!
+0J
+11
+#492
+01
+#498
+0%
+1>
+1J
+11
+#504
+01
+#510
+b1001 2
+b1001 6
+0%
+0>
+b1001 K
+b11101010000000000000000xxxxxxx01 N
+1!
+0J
+11
+#516
+01
+#522
+0%
+1>
+1J
+11
+#528
+01
+#534
+04
+0%
+0>
+0!
+0J
+11
+#540
+01
+#546
+0%
+1>
+1J
+11
+#552
+01
+#558
+b1010 6
+b1010 2
+0%
+0>
+b1010 K
+b1101010000000000000000xxxxxxx010 N
+1!
+0J
+11
+#564
+01
+#570
+0%
+1>
+1J
+11
+#576
+01
+#582
+14
+0%
+0>
+0!
+0J
+11
+#588
+01
+#594
+0%
+1>
+1J
+11
+#600
+01
+#606
+b1011 2
+b1011 6
+0%
+0>
+b1011 K
+b101010000000000000000xxxxxxx0101 N
+1!
+0J
+11
+#612
+01
+#618
+0%
+1>
+1J
+11
+#624
+01
+#630
+0%
+0>
+0!
+0J
+11
+#636
+01
+#642
+0%
+1>
+1J
+11
+#648
+01
+#654
+b1100 6
+b1100 2
+0%
+0>
+b1100 K
+b1010000000000000000xxxxxxx01011 N
+1!
+0J
+11
+#660
+01
+#666
+0%
+1>
+1J
+11
+#672
+01
+#678
+04
+03
+0%
+0>
+0$
+0!
+0J
+11
+#684
+01
+#690
+0%
+1>
+1J
+11
+#696
+01
+#702
+b1101 2
+b1101 6
+0%
+0>
+b1101 K
+b1010000000000000000xxxxxxx010110 N
+1!
+0J
+11
+#708
+01
+#714
+0%
+1>
+1J
+11
+#720
+01
+#726
+13
+0%
+0>
+1$
+0!
+0J
+11
+#732
+01
+#738
+0%
+1>
+1J
+11
+#744
+01
+#750
+b1110 6
+b1110 2
+0%
+0>
+b1110 K
+b10000000000000000xxxxxxx0101100 N
+1!
+0J
+11
+#756
+01
+#762
+0%
+1>
+1J
+11
+#768
+01
+#774
+14
+03
+0%
+0>
+0$
+0!
+0J
+11
+#780
+01
+#786
+0%
+1>
+1J
+11
+#792
+01
+#798
+b1111 2
+b1111 6
+0%
+0>
+b1111 K
+b10000000000000000xxxxxxx01011001 N
+1!
+0J
+11
+#804
+01
+#810
+0%
+1>
+1J
+11
+#816
+01
+#822
+13
+0%
+0>
+1$
+0!
+0J
+11
+#828
+01
+#834
+0%
+1>
+1J
+11
+#840
+01
+#846
+b10000 6
+b10000 2
+0%
+0>
+1L
+b0 K
+b0xxxxxxx010110011 N
+1!
+0J
+11
+#852
+01
+#858
+b11 O
+0%
+1>
+1J
+11
+#864
+01
+#870
+x4
+x3
+0%
+0>
+b11 P
+0L
+0$
+0!
+0J
+11
+#876
+01
+#882
+0%
+b1 Q
+11
+#888
+01
+#894
+b0 O
+1%
+b10 Q
+11
+#900
+01
+#906
+b0 Q
+0&
+b0 P
+1#
+b0xxxxxxx010110011 "
+b0xxxxxxx010110011 M
+11
+#912
+01
+#918
+0#
+11
+#924
+01
+#930
+11
+#936
+01
+#942
+11
+#948
+01
+#954
+11
+#960
+01
+#966
+00
+09
+b10 /
+b10 =
+11
+#972
+01
+#978
+b10000000000000000000000000 N
+b1 O
+1:
+11

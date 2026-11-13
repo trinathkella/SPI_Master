@@ -1,3 +1,5 @@
+`timescale 1ps/1ps
+
 typedef enum logic [1:0] {
 	IDLE 		= 2'b00,
 	WAIT_START	= 2'b01,
@@ -137,14 +139,29 @@ module spi_master #(parameter A_WIDTH = 6,
 		csb = 1'b1;
 		state_ns = state_ps;
 		case(state_ps)
-			IDLE : state_ns = (start) ? WAIT_START : IDLE;
+			IDLE : begin
+				csb = 1'b1;
+				// state_ns = (start) ? WAIT_START : IDLE;
+				if(start)
+					state_ns = WAIT_START;
+				else
+					state_ns = IDLE;
+			end
 			WAIT_START : begin
 				csb = 1'b0;
-				state_ns = (wait_count == target_wait - 1) ? SHIFT : WAIT_START;
+				// state_ns = (wait_count == target_wait - 1) ? SHIFT : WAIT_START;
+				if(wait_count == target_wait - 1)
+					state_ns = SHIFT;
+				else
+					state_ns = WAIT_START;
 			end
 			SHIFT : begin
 				csb      = 1'b0;
-				state_ns = (last_bit && sclk_tick && sclk) ? WAIT_END : SHIFT;
+				// state_ns = (last_bit && sclk_tick && sclk) ? WAIT_END : SHIFT;
+				if(last_bit && sclk_tick && sclk)
+					state_ns = WAIT_END;
+				else
+					state_ns = SHIFT;
 			end
 			WAIT_END : begin
 				csb = 1'b0;
